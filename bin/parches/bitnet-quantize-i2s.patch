@@ -1,0 +1,78 @@
+diff --git a/ggml/src/ggml-cpu/quants.c b/ggml/src/ggml-cpu/quants.c
+index 603f51c..08f28b4 100644
+--- a/ggml/src/ggml-cpu/quants.c
++++ b/ggml/src/ggml-cpu/quants.c
+@@ -1375,8 +1375,9 @@ size_t quantize_i2_s(const float * src, void * dst, int64_t nrow, int64_t n_per_
+         } else {
+             val = ((double)src[i] * max > 0) ? 2 : 0; // maps to +1 or -1
+         }
+-        int byte_idx = i / 4;
+-        int bit_pos = 6 - 2 * (i % 4);
++        // 128-value blocks of 32 bytes, same layout as dequantize_row_i2_s
++        int64_t byte_idx = (i / 128) * 32 + (i % 32);
++        int bit_pos = 6 - 2 * ((i % 128) / 32);
+         q[byte_idx] |= (val << bit_pos);
+     }
+ 
+diff --git a/ggml/src/ggml-quants.c b/ggml/src/ggml-quants.c
+index 08dd367..1cccaa0 100644
+--- a/ggml/src/ggml-quants.c
++++ b/ggml/src/ggml-quants.c
+@@ -5578,6 +5578,7 @@ bool ggml_validate_row_data(enum ggml_type type, const void * data, size_t nbyte
+         case GGML_TYPE_I16:
+         case GGML_TYPE_I32:
+         case GGML_TYPE_I64:
++        case GGML_TYPE_I2_S:
+             // nothing to validate
+             break;
+         default:
+diff --git a/src/llama-quant.cpp b/src/llama-quant.cpp
+index 847e79f..fda705f 100644
+--- a/src/llama-quant.cpp
++++ b/src/llama-quant.cpp
+@@ -414,6 +414,11 @@ static ggml_type llama_tensor_get_type_impl(quantize_state_impl & qs, ggml_type
+     // TODO: avoid hardcoded tensor names - use the TN_* constants
+     const llm_arch arch = qs.model.arch;
+ 
++    // BitNet I2_S: keep embeddings and output in F16, as the BitNet converter does
++    if (ftype == LLAMA_FTYPE_MOSTLY_I2_S && (category == tensor_category::OUTPUT || category == tensor_category::TOKEN_EMBD)) {
++        return GGML_TYPE_F16;
++    }
++
+     auto use_more_bits = [](int i_layer, int n_layers) -> bool {
+         return i_layer < n_layers/8 || i_layer >= 7*n_layers/8 || (i_layer - n_layers/8)%3 == 2;
+     };
+@@ -817,6 +822,7 @@ ggml_type llama_ftype_get_default_type(llama_ftype ftype) {
+         case LLAMA_FTYPE_MOSTLY_Q6_K:    return GGML_TYPE_Q6_K;
+         case LLAMA_FTYPE_MOSTLY_TQ1_0:   return GGML_TYPE_TQ1_0;
+         case LLAMA_FTYPE_MOSTLY_TQ2_0:   return GGML_TYPE_TQ2_0;
++        case LLAMA_FTYPE_MOSTLY_I2_S:    return GGML_TYPE_I2_S;
+         case LLAMA_FTYPE_MOSTLY_IQ2_XXS: return GGML_TYPE_IQ2_XXS;
+         case LLAMA_FTYPE_MOSTLY_IQ2_XS:  return GGML_TYPE_IQ2_XS;
+         case LLAMA_FTYPE_MOSTLY_IQ2_S:   return GGML_TYPE_IQ2_XS;
+diff --git a/src/models/bitnet.cpp b/src/models/bitnet.cpp
+index 985c8d6..a44a1bd 100644
+--- a/src/models/bitnet.cpp
++++ b/src/models/bitnet.cpp
+@@ -130,7 +130,8 @@ llama_model_bitnet::graph::graph(const llama_model & model, const llm_graph_para
+                 model.layers[il].ffn_gate, NULL, model.layers[il].ffn_gate_s,
+                 NULL,                      NULL, NULL,
+                 NULL,
+-                LLM_FFN_SILU, LLM_FFN_PAR, il);
++                // bitnet-b1.58 (2B-4T) uses squared ReLU; the original BitNet uses SiLU
++                arch == LLM_ARCH_BITNET_B158 ? LLM_FFN_RELU_SQR : LLM_FFN_SILU, LLM_FFN_PAR, il);
+         cb(cur, "ffn_sub_out", il);
+ 
+         cur = build_norm(cur,
+diff --git a/tools/quantize/quantize.cpp b/tools/quantize/quantize.cpp
+index 840eefc..1628646 100644
+--- a/tools/quantize/quantize.cpp
++++ b/tools/quantize/quantize.cpp
+@@ -46,6 +46,7 @@ static const std::vector<quant_option> QUANT_OPTIONS = {
+     { "IQ1_M",    LLAMA_FTYPE_MOSTLY_IQ1_M,    " 1.75 bpw quantization",            },
+     { "TQ1_0",    LLAMA_FTYPE_MOSTLY_TQ1_0,    " 1.69 bpw ternarization",           },
+     { "TQ2_0",    LLAMA_FTYPE_MOSTLY_TQ2_0,    " 2.06 bpw ternarization",           },
++    { "I2_S",     LLAMA_FTYPE_MOSTLY_I2_S,     " 2.00 bpw ternarization (BitNet)",  },
+     { "Q2_K",     LLAMA_FTYPE_MOSTLY_Q2_K,     " 2.96G, +3.5199 ppl @ Llama-3-8B",  },
+     { "Q2_K_S",   LLAMA_FTYPE_MOSTLY_Q2_K_S,   " 2.96G, +3.1836 ppl @ Llama-3-8B",  },
+     { "IQ3_XXS",  LLAMA_FTYPE_MOSTLY_IQ3_XXS,  " 3.06 bpw quantization",            },

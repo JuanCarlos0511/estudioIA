@@ -1,0 +1,15 @@
+runtimes/
+modelos/
+registros/*.log
+registros/*.pid
+registros/*.lock
+registros/ollama-home/
+registros/archlinux-keyring.gpg
+__pycache__/
+*.part
+registros/colab/
+# Repositorio aparte (testing-modelos-terniarios); se clona aquí, ver README.md.
+pruebas/
+# Material del curso que no se publica.
+guia_laboratorio.pdf
+ejercicio_bitnet/solucion_evaluador/

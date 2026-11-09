@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+# CLI oficial instalado en el proyecto; las credenciales las gestiona su keyring.
+set -euo pipefail
+root="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")/.." && pwd)"
+cli="$root/runtimes/colab-bin/colab"
+if [[ ! -x "$cli" ]]; then
+    echo 'Falta instalar el CLI oficial. Ejecuta: bash bin/iniciar_colab.sh' >&2
+    exit 1
+fi
+exec "$root/runtimes/colab-tools/google-colab-cli/bin/python" \
+    "$root/bin/colab_local.py" --auth=oauth2 \
+    --config "$root/runtimes/colab-estado/sessions.json" "$@"

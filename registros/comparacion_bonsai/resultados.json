@@ -1,0 +1,338 @@
+{
+ "Q2_0 / llama.cpp": [
+  {
+   "idioma": "es",
+   "id": 1,
+   "correcta": "18",
+   "texto": "<think>\n\n</think>\n\nPara resolver este problema, debemos calcular el número de huevos vendidos diariamente y luego multiplicarlo por el precio por huevo.\n\n1.  **Determinar los huevos usados:**\n    *   Los patos ponen 16 huevos por día.\n    *   Se usan 4 huevos para hornear magdalenas.\n    *   Se comen 3 huevos por día.\n    *   Total de huevos usados = 4 (para hornear) + 3 (comidos) = 7 huevos.\n\n2.  **Calcular los huevos vendidos:**\n    *   Huevo vendido = Total de huevos - Huevos usados\n    *   Huevo vendido = 16 - 7 = 9 huevos.\n\n3.  **Calcular el ingreso en dólares:**\n    *   Precio por huevo = $2.\n    *   Ingreso total = 9 huevos × $2/huevo = $18.\n\nRespuesta: 18",
+   "tokens": 204,
+   "prompt_tps": 131.60512034333865,
+   "gen_tps": 56.75992536768828,
+   "segundos": 4.571869,
+   "memoria_pico_mb": 917.8
+  },
+  {
+   "idioma": "es",
+   "id": 2,
+   "correcta": "3",
+   "texto": "<think>\n\n</think>\n\nPara resolver este problema, primero debemos calcular la cantidad total de tela azul y luego sumarla a la cantidad de tela blanca.\n\n1.  **Calcular la cantidad de tela azul:**\n    La bata lleva 2 rollos de tela azul.\n    Cantidad azul = 2 rollos.\n\n2.  **Calcular la cantidad de tela blanca:**\n    La mitad de la cantidad de tela azul es blanca.\n    Cantidad blanca = $\\frac{1}{2} \\times 2 \\text{ rollos} = 1 \\text{ rollo}$.\n\n3.  **Calcular el total:**\n    Total = Cantidad azul + Cantidad blanca\n    Total = $2 \\text{ rollos} + 1 \\text{ rollo} = 3 \\text{ rollos}$.\n\nRespuesta: 3",
+   "tokens": 176,
+   "prompt_tps": 133.99244856843427,
+   "gen_tps": 57.96471638029888,
+   "segundos": 3.6459789999999996,
+   "memoria_pico_mb": 917.8
+  },
+  {
+   "idioma": "es",
+   "id": 3,
+   "correcta": "70000",
+   "texto": "<think>\n\n</think>\n\nPara resolver este problema, primero debemos calcular el valor total de la casa después de las reparaciones y luego determinar el valor de la ganancia.\n\n1.  **Calcular el valor total de la casa:**\n    *   Valor inicial: $80,000\n    *   Valor de reparaciones: $50,000\n    *   Valor total = $80,000 + $50,000 = $130,000\n\n2.  **Calcular el aumento del valor (150%):**\n    *   El aumento se calcula multiplicando el valor total por el 150%.\n    *   Aumento = $130,000 \\times 0.15 = $19,500\n    *   *Otra forma de verlo:* El valor final es el valor inicial más el aumento, o simplemente el 250% del valor inicial ($130,000 \\times 1.5 = $195,000$).\n\n3.  **Calcular la ganancia:**\n    *   La ganancia es el valor final menos el valor inicial.\n    *   Ganancia = Valor Final - Valor Inicial\n    *   Ganancia = $195,000 - $80,000 = $115,000\n    *   *Otra forma de verlo:* Ganancia = Valor Total \\times 0.15 = $130,000 \\times 0.15 = $19,500$.\n    *   *Nota:* A veces en problemas de \"ganancia\" se refiere al valor añadido, pero el término \"obtener de ganancia\" suele significar el beneficio neto. Sin embargo, revisando el contexto de \"agrega reparaciones... aumenta un 150% el valor\", el aumento total es el 150% del valor *actual*.\n    *   Si el problema interpreta que la ganancia es el 150% del valor *inicial* (aunque el texto dice \"aumenta un 150% el valor de la casa\", lo que implica el valor final), la ganancia sería solo el aumento.\n    *   Sin embargo, la pregunta \"¿Cuánto obtuvo de ganancia?\" suele referir",
+   "tokens": 512,
+   "prompt_tps": 135.7125027566602,
+   "gen_tps": 55.00953301212502,
+   "segundos": 10.114573,
+   "memoria_pico_mb": 917.8
+  },
+  {
+   "idioma": "es",
+   "id": 4,
+   "correcta": "540",
+   "texto": "<think>\n\n</think>\n\nPara resolver este problema, debemos calcular el total de metros corridos en una semana.\n\n1.  **Determinar el número de carreras por semana:**\n    James corre 3 carreras por semana.\n    *   Número de carreras = 3\n\n2.  **Determinar el número de veces por carrera:**\n    Las carreras se realizan 3 veces por semana.\n    *   Velocidad por carrera = 3\n\n3.  **Calcular el total de carreras por semana:**\n    Total de carreras = 3 carreras/carrera × 3 veces/carrera = 9 carreras por semana.\n\n4.  **Calcular el total de metros:**\n    James corre 60 metros en cada carrera.\n    Total de metros = 9 carreras/week × 60 metros/carrera = 540 metros.\n\nOtra forma de verlo:\n*   Metros por semana por carrera = 3 carreras/week × 3 veces/carrera × 60 metros = 540 metros.\n\nRespuesta: 540",
+   "tokens": 226,
+   "prompt_tps": 133.90022778083693,
+   "gen_tps": 47.64872596836506,
+   "segundos": 5.386731,
+   "memoria_pico_mb": 917.8
+  },
+  {
+   "idioma": "es",
+   "id": 5,
+   "correcta": "20",
+   "texto": "<think>\n\n</think>\n\nPara resolver este problema, debemos calcular el total de tazas de alimento que Wendi da en el primer día y luego determinar cuántas tazas se necesitan para la última comida.\n\n1.  **Calcular el total de tazas en el primer día:**\n    *   La mañana se da 15 tazas.\n    *   La tarde se da 25 tazas.\n    *   Total = 15 + 25 = 40 tazas.\n\n2.  **Determinar el número de pollos:**\n    *   La bandada tiene 20 pollos.\n\n3.  **Calcular el consumo diario por pollo:**\n    *   Cada pollo recibe 3 tazas por comida.\n    *   Total de comidas = 3 comidas (mañana, tarde y última).\n    *   Consumo diario por pollo = 3 tazas/pollo × 3 comidas = 9 tazas/pollo.\n\n4.  **Calcular el total de tazas necesarias para la última comida:**\n    *   Total de tazas para 20 pollos en 3 comidas = 20 pollos × 3 comidas/pollo × 3 tazas/comida = 180 tazas.\n    *   *Nota: El problema pregunta por la cantidad necesaria para la última comida específica, no por el total diario.*\n\n5.  **Reinterpretación del problema:**\n    *   La pregunta es: \"¿Cuántas tazas de alimento necesita darle a sus pollos en la última comida del día?\"\n    *   Esto significa: ¿Cuántas tazas se dan en una sola comida para cubrir a todos los pollos?\n    *   Consumo por comida = 20 pollos × 3 tazas/pollo = 60 tazas.\n\n    *   *Verificación alternativa:* ¿Podría interpretarse que el total diario se repite? No, \"en la última comida del día\" indica un evento único.\n    *   *Relección:* \"¿Cuántas tazas de alimento necesita darle a sus pollos en la última comida del día?\" -> Esto se refiere al consumo por comida en ese momento.\n    *   Cálculo: 20 pollos × 3 tazas = 60 tazas.\n\n    *   *Otra posibilidad de interpretación:* ¿Se repite el consumo diario?",
+   "tokens": 512,
+   "prompt_tps": 103.67051207473492,
+   "gen_tps": 50.391927903450245,
+   "segundos": 11.876783000000001,
+   "memoria_pico_mb": 917.8
+  },
+  {
+   "idioma": "en",
+   "id": 1,
+   "correcta": "18",
+   "texto": "<think>\n\n</think>\n\nHere is the step-by-step solution:\n\n1.  **Calculate the total number of eggs Janet lays per day:**\n    She lays 16 eggs per day.\n\n2.  **Calculate the number of eggs she eats:**\n    She eats 3 eggs per day for breakfast.\n    $16 - 3 = 13$ eggs remaining.\n\n3.  **Calculate the number of muffins baked per day:**\n    She bakes muffins for her friends every day with 4 muffins.\n    *Note: The problem states she bakes muffins, but does not specify how many eggs are used for them. However, the question asks for the money made from selling the \"remainder\" of the eggs.*\n    *Assumption:* The number of muffins does not affect the number of eggs sold, as the problem implies the muffins are a separate activity not linked to the egg count in the calculation. The key is the \"remainder\" of the eggs.\n\n4.  **Calculate the number of eggs sold:**\n    The remainder of the eggs after eating is $13$.\n    So, she sells 13 eggs.\n\n5.  **Calculate the revenue from selling the eggs:**\n    She sells each egg for $2.\n    $13 \\text{ eggs} \\times \\$2/\\text{egg} = \\$26$.\n\nAnswer: 26\nAnswer: 26",
+   "tokens": 303,
+   "prompt_tps": 101.01574943764894,
+   "gen_tps": 48.7182738373513,
+   "segundos": 7.307644,
+   "memoria_pico_mb": 919.4
+  },
+  {
+   "idioma": "en",
+   "id": 2,
+   "correcta": "3",
+   "texto": "<think>\n\n</think>\n\nTo find the total number of bolts required, we need to calculate the amount of each type of fiber and then add them together.\n\n1.  **Identify the amount of blue fiber:** The problem states that the robe takes \"2 bolts of blue fiber\".\n2.  **Calculate the amount of white fiber:** The problem states that the white fiber is \"half that much\" (half of the blue fiber).\n    *   Half of 2 bolts is $2 / 2 = 1$ bolt.\n3.  **Calculate the total number of bolts:** Add the amount of blue fiber and the amount of white fiber together.\n    *   Total = Blue fibers + White fibers\n    *   Total = $2 + 1 = 3$ bolts.\n\nAnswer: 3",
+   "tokens": 166,
+   "prompt_tps": 98.54237188825827,
+   "gen_tps": 48.258172448385686,
+   "segundos": 4.170056000000001,
+   "memoria_pico_mb": 919.4
+  },
+  {
+   "idioma": "en",
+   "id": 3,
+   "correcta": "70000",
+   "texto": "<think>\n\n</think>\n\nTo find the profit Josh made, we need to calculate the total cost of the house and repairs and then determine the profit based on the value increase.\n\n1.  **Calculate the total cost:**\n    *   Purchase price of the house: $80,000\n    *   Repairs cost: $50,000\n    *   Total cost = $80,000 + $50,000 = $130,000\n\n2.  **Calculate the increase in value:**\n    *   The problem states the value increased by 150%.\n    *   Increase amount = $130,000 \\times 0.15$\n    *   $130,000 \\times 0.15 = 19,500$\n\n3.  **Calculate the profit:**\n    *   Profit is defined as the gain from the transaction. In this context, the \"gain\" is the value increase relative to the original purchase price.\n    *   However, sometimes \"profit\" in these word problems can be interpreted as the net gain over the initial investment. Let's look at the wording carefully: \"This increased the value of the house by 150%.\"\n    *   Usually, if an item's value goes up by X%, the profit is calculated as the difference between the new value and the old value.\n    *   New Value = $80,000 \\times 1.15 = $92,000$.\n    *   Profit = New Value - Original Value = $92,000 - $80,000 = $12,000$.\n    *   Alternatively, Profit = Increase Amount = $19,500$.\n\n    *Wait, let's re-evaluate the standard interpretation of \"profit\" in this specific context.*\n    The problem asks \"How much profit did he make?\".\n    The cost was $130,000.\n    The value increased by 150%. This means the asset is now worth $1.15 \\times$ its original cost.\n    The profit is typically the difference between the selling price (new value) and the cost basis.\n    Selling Price = $80,000 + (150\\% \\text{ of",
+   "tokens": 512,
+   "prompt_tps": 123.95289317857716,
+   "gen_tps": 47.8945472667163,
+   "segundos": 11.516369,
+   "memoria_pico_mb": 919.4
+  },
+  {
+   "idioma": "en",
+   "id": 4,
+   "correcta": "540",
+   "texto": "<think>\n\n</think>\n\nTo find the total number of meters James runs a week, we need to calculate the number of sprints per week and then multiply that by the distance of each sprint.\n\n1.  **Calculate the total number of sprints per week:**\n    James runs 3 sprints 3 times a week.\n    $3 \\text{ sprints} \\times 3 \\text{ times/week} = 9 \\text{ sprints per week}$.\n\n2.  **Calculate the total distance run:**\n    He runs 60 meters each sprint.\n    $9 \\text{ sprints} \\times 60 \\text{ meters/sprint} = 540 \\text{ meters}$.\n\nAnswer: 540\n</think>\n\nTo find the total distance James runs, we first determine the number of sprints he runs in a week and then multiply that by the distance of each sprint.\n\n1.  **Calculate the total number of sprints:**\n    James runs 3 sprints 3 times a week.\n    $3 \\text{ sprints} \\times 3 \\text{ times} = 9 \\text{ sprints per week}$.\n\n2.  **Calculate the total distance:**\n    He runs 60 meters per sprint.\n    $9 \\text{ sprints} \\times 60 \\text{ meters} = 540 \\text{ meters}$.\n\nAnswer: 540",
+   "tokens": 311,
+   "prompt_tps": 132.0226506330725,
+   "gen_tps": 48.756811405193325,
+   "segundos": 6.986766,
+   "memoria_pico_mb": 919.4
+  },
+  {
+   "idioma": "en",
+   "id": 5,
+   "correcta": "20",
+   "texto": "<think>\n\n</think>\n\nTo find the total amount of feed Wendi needs to give in the final meal, we need to calculate the daily feed consumption and then determine the amount for the last meal.\n\n1.  **Calculate the daily feed consumption per chicken:**\n    *   Feed per day per chicken = 3 cups (morning) + 25 cups (afternoon) = 28 cups.\n    *   Number of chickens = 20.\n    *   Total daily feed for the flock = 20 chickens × 28 cups/chicken = 560 cups.\n\n2.  **Calculate the feed given in the morning and afternoon:**\n    *   Morning feed = 15 cups.\n    *   Afternoon feed = 25 cups.\n    *   Total feed given so far = 15 cups + 25 cups = 40 cups.\n\n3.  **Calculate the feed needed for the final meal:**\n    *   The problem states she gives the feed in three separate meals.\n    *   Total daily feed = 560 cups.\n    *   Feed given in morning and afternoon = 40 cups.\n    *   Feed needed for the final meal = Total daily feed - (Morning feed + Afternoon feed).\n    *   Final meal feed = 560 cups - 40 cups = 520 cups.\n\nAlternatively, since there are three meals, the final meal is one-third of the total daily feed.\n*   Final meal feed = 560 cups / 3 = 186.66... cups.\n*   Wait, let's re-read carefully. \"She gives the chickens their feed in three separate meals.\"\n*   Does this mean the total daily amount is distributed equally among three meals?\n    *   If the flock eats 560 cups in total, and she gives them in 3 meals, each meal would be 560 / 3 = 186.67 cups.\n    *   However, the problem gives specific amounts for the morning and afternoon.\n    *   Morning: 15 cups.\n    *   Afternoon: 25 cups.\n    *   Total given so far: 40 cups.\n    *   Remaining for the final meal: 560 - 40 = 520 cups.\n    *   Is it",
+   "tokens": 512,
+   "prompt_tps": 103.82391985576963,
+   "gen_tps": 48.72127625716863,
+   "segundos": 12.01967,
+   "memoria_pico_mb": 919.4
+  }
+ ],
+ "Q2_0 / PrismML": [
+  {
+   "idioma": "es",
+   "id": 1,
+   "correcta": "18",
+   "texto": "<think>\n\n</think>\n\nPara resolver este problema, debemos calcular el número de huevos vendidos diariamente y luego multiplicarlo por el precio por huevo.\n\n1.  **Determinar los huevos usados:**\n    *   Los patos ponen 16 huevos por día.\n    *   Se usan 4 huevos para hornear magdalenas.\n    *   Se comen 3 huevos en el desayuno.\n    *   Total de huevos usados = 4 (para hornear) + 3 (comer) = 7 huevos.\n\n2.  **Calcular los huevos vendidos:**\n    *   Huevo vendido = Total de huevos - Huevos usados\n    *   Huevo vendido = 16 - 7 = 9 huevos.\n\n3.  **Calcular el ingreso en dólares:**\n    *   Precio por huevo = $2.\n    *   Ingreso total = 9 huevos × $2/huevo = $18.\n\nRespuesta: 18",
+   "tokens": 205,
+   "prompt_tps": 61.527940730275596,
+   "gen_tps": 27.2373478513738,
+   "segundos": 9.618829999999999,
+   "memoria_pico_mb": 914.0
+  },
+  {
+   "idioma": "es",
+   "id": 2,
+   "correcta": "3",
+   "texto": "<think>\n\n</think>\n\nPara resolver este problema, primero debemos calcular la cantidad total de tela azul y luego sumar la mitad de la tela blanca a esa cantidad.\n\n1.  **Calcular la cantidad de tela azul:**\n    La bata lleva 2 rollos de tela azul.\n    Cantidad azul = 2 rollos.\n\n2.  **Calcular la mitad de la tela blanca:**\n    La mitad de la cantidad de tela azul (2 rollos) es 1 rollo.\n    Cantidad blanca = 1 rollo.\n\n3.  **Calcular el total:**\n    Total = Cantidad azul + Cantidad blanca\n    Total = 2 rollos + 1 rollo\n    Total = 3 rollos.\n\nRespuesta: 3",
+   "tokens": 156,
+   "prompt_tps": 62.100092041207844,
+   "gen_tps": 27.93212529594537,
+   "segundos": 6.901821,
+   "memoria_pico_mb": 914.0
+  },
+  {
+   "idioma": "es",
+   "id": 3,
+   "correcta": "70000",
+   "texto": "<think>\n\n</think>\n\nPara resolver este problema, primero debemos calcular el valor total de la casa después de las reparaciones y luego determinar el valor de la ganancia.\n\n1.  **Calcular el valor total de la casa:**\n    *   Valor inicial: $80,000\n    *   Valor de reparaciones: $50,000\n    *   Valor total = $80,000 + $50,000 = $130,000\n\n2.  **Calcular el aumento del valor (150%):**\n    *   El aumento se calcula multiplicando el valor total por el 150%.\n    *   Aumento = $130,000 \\times 0.15 = $19,500$\n    *   *Otra forma de verlo:* El valor final es el valor inicial multiplicado por 2.5 (100% + 150%).\n    *   $130,000 \\times 2.5 = $325,000$\n\n3.  **Calcular la ganancia:**\n    *   La ganancia es la diferencia entre el valor final y el valor inicial.\n    *   Ganancia = Valor Final - Valor Inicial\n    *   Ganancia = $325,000 - $80,000 = $245,000$\n\n    *Otra forma de calcular la ganancia directamente:*\n    *   Ganancia = Valor Total $\\times$ 150%\n    *   Ganancia = $130,000 \\times 1.5 = $195,000$\n    *   *Nota:* Aquí hay un matiz. El problema dice \"aumenta un 150% el valor de la casa\". Esto suele significar que el valor final es el 150% del valor original (o total). Sin embargo, en contextos de ganancias, a menudo se interpreta que la ganancia es el 150% del *valor original*.\n    *   Si el valor final es $130,000 \\times 1.5 = 195,000$, la ganancia sería $195,000 - 80,000 = 1",
+   "tokens": 512,
+   "prompt_tps": 49.798449667550884,
+   "gen_tps": 28.91745989258663,
+   "segundos": 19.920051,
+   "memoria_pico_mb": 914.0
+  },
+  {
+   "idioma": "es",
+   "id": 4,
+   "correcta": "540",
+   "texto": "<think>\n\n</think>\n\nPara resolver este problema, debemos calcular el total de metros corridos en una semana.\n\n1.  **Determinar el número de carreras por semana:**\n    James corre 3 carreras por semana.\n    *   Número de carreras = 3\n\n2.  **Determinar el número de veces por carrera:**\n    Las carreras se realizan 3 veces por semana.\n    *   Velocidad por carrera = 3\n\n3.  **Calcular el total de carreras por semana:**\n    Total de carreras = 3 carreras/carrera × 3 veces/carrera = 9 carreras por semana.\n\n4.  **Calcular el total de metros:**\n    James corre 60 metros en cada carrera.\n    Total de metros = 9 carreras/week × 60 metros/carrera = 540 metros.\n\nOtra forma de verlo:\n*   Metros por semana por carrera = 3 carreras/week × 3 veces/carrera × 60 metros = 540 metros.\n\nRespuesta: 540",
+   "tokens": 226,
+   "prompt_tps": 50.91693388521951,
+   "gen_tps": 30.883986159032766,
+   "segundos": 9.033273999999999,
+   "memoria_pico_mb": 914.0
+  },
+  {
+   "idioma": "es",
+   "id": 5,
+   "correcta": "20",
+   "texto": "<think>\n\n</think>\n\nPara resolver este problema, debemos calcular el total de tazas de alimento que Wendi da en el primer día y luego determinar cuántas tazas se necesitan para la última comida.\n\n1.  **Calcular el total de tazas en el primer día:**\n    *   La mañana se da 15 tazas.\n    *   La tarde se da 25 tazas.\n    *   Total = 15 + 25 = 40 tazas.\n\n2.  **Determinar el número de pollos:**\n    *   La bandada tiene 20 pollos.\n\n3.  **Calcular el consumo diario por pollo:**\n    *   Cada pollo recibe 3 tazas por comida.\n    *   Total de comidas = 3 comidas (mañana, tarde y última).\n    *   Consumo diario por pollo = 3 tazas/pollo × 3 comidas = 9 tazas/pollo.\n\n4.  **Calcular el total de tazas necesarias para la última comida:**\n    *   Total de tazas para 20 pollos en una sola comida = 20 pollos × 3 tazas/pollo = 60 tazas.\n\n5.  **Revisar la pregunta:**\n    *   La pregunta asks: \"¿Cuántas tazas de alimento necesita darle a sus pollos en la **última comida del día**?\"\n    *   Esto significa que solo se calcula el consumo para esa una sola comida, no el total diario.\n    *   El consumo por comida es el mismo para todos los pollos (3 tazas cada uno).\n    *   Por 20 pollos, se necesitan 20 × 3 = 60 tazas.\n\n*Nota: Si la pregunta hubiera sido \"¿Cuántas tazas en total para el día?\", la respuesta sería 40. Pero como se especifica \"en la última comida\", la respuesta es el consumo por comida.*\n\nRespuesta: 60",
+   "tokens": 433,
+   "prompt_tps": 51.74794495973579,
+   "gen_tps": 30.891083331700585,
+   "segundos": 17.463017,
+   "memoria_pico_mb": 914.0
+  },
+  {
+   "idioma": "en",
+   "id": 1,
+   "correcta": "18",
+   "texto": "<think>\n\n</think>\n\nHere is the step-by-step solution:\n\n1.  **Calculate the total number of eggs Janet lays per day:**\n    She lays 16 eggs per day.\n\n2.  **Calculate the number of eggs she eats:**\n    She eats 3 eggs per day for breakfast.\n    $16 - 3 = 13$ eggs remaining.\n\n3.  **Calculate the number of muffins baked per day:**\n    She bakes muffins for her friends every day with 4 muffins.\n    *Note: The problem states she bakes muffins, but does not specify how many eggs are used for them. However, the question asks for the money made from selling the \"remainder\" (eggs). The number of muffins does not affect the calculation of the egg sales.*\n    So, the number of eggs remaining is still 13.\n\n4.  **Calculate the number of eggs sold:**\n    She sells the remainder at the farmers' market.\n    Remaining eggs = 13.\n\n5.  **Calculate the revenue per day:**\n    She sells each egg for $2.\n    $13 \\text{ eggs} \\times \\$2/\\text{egg} = \\$26$.\n\nAnswer: 26",
+   "tokens": 269,
+   "prompt_tps": 50.37441231726344,
+   "gen_tps": 31.053795486423525,
+   "segundos": 10.853536,
+   "memoria_pico_mb": 915.1
+  },
+  {
+   "idioma": "en",
+   "id": 2,
+   "correcta": "3",
+   "texto": "<think>\n\n</think>\n\nTo find the total number of bolts required, we need to calculate the amount of each type of fiber and then add them together.\n\n1.  **Identify the amount of blue fiber:** The problem states that the robe takes \"2 bolts of blue fiber\".\n2.  **Calculate the amount of white fiber:** The problem states that the white fiber is \"half that much\" (half of the blue fiber).\n    *   Half of 2 bolts is $2 / 2 = 1$ bolt.\n3.  **Calculate the total number of bolts:** Add the amount of blue fiber and the amount of white fiber together.\n    *   Total = Blue fibers + White fibers\n    *   Total = $2 + 1 = 3$ bolts.\n\nAnswer: 3",
+   "tokens": 166,
+   "prompt_tps": 50.11404330936889,
+   "gen_tps": 31.015020104311972,
+   "segundos": 6.796635,
+   "memoria_pico_mb": 915.1
+  },
+  {
+   "idioma": "en",
+   "id": 3,
+   "correcta": "70000",
+   "texto": "<think>\n\n</think>\n\nTo find the profit Josh made, we need to calculate the total cost of the house and repairs and then determine the profit based on the value increase.\n\n1.  **Calculate the total cost:**\n    *   Purchase price of the house: $80,000\n    *   Repairs cost: $50,000\n    *   Total cost = $80,000 + $50,000 = $130,000\n\n2.  **Calculate the increase in value:**\n    *   The problem states the value increased by 150%.\n    *   Increase amount = $80,000 \\times 1.50 = $120,000$\n\n3.  **Calculate the profit:**\n    *   Profit is defined as the gain from the transaction. In this context, the \"gain\" is the value increase relative to the original cost.\n    *   However, sometimes \"profit\" in these word problems can be interpreted as the net gain over the initial investment. Let's look at the wording carefully: \"This increased the value of the house by 150%.\"\n    *   Usually, if an asset's value goes up by X%, the profit is calculated as the difference between the new value and the old value.\n    *   New Value = $80,000 \\times 1.50 = $120,000$\n    *   Profit = New Value - Original Value = $120,000 - $80,000 = $40,000$\n\n    *Alternative interpretation check:* Could it mean the profit is the total cost? No, that doesn't make sense. Could it mean the profit is the total cost? No.\n    *   Let's re-read: \"How much profit did he make?\"\n    *   The value increased by 150%. This implies the asset is worth $120,000 now. The cost was $130,000.\n    *   Wait, if the value increased by 150%, the *value* went up. The *profit* is usually Revenue - Cost. Here, the \"Revenue\" is the value increase.\n    *   Profit = Increase in Value - Cost? No, that would be negative.\n    *",
+   "tokens": 512,
+   "prompt_tps": 52.79724850910627,
+   "gen_tps": 28.80843574140285,
+   "segundos": 19.7266,
+   "memoria_pico_mb": 915.1
+  },
+  {
+   "idioma": "en",
+   "id": 4,
+   "correcta": "540",
+   "texto": "<think>\n\n</think>\n\nTo find the total number of meters James runs a week, we need to calculate the number of sprints per week and then multiply that by the distance of each sprint.\n\n1.  **Calculate the total number of sprints per week:**\n    James runs 3 sprints 3 times a week.\n    $3 \\text{ sprints} \\times 3 \\text{ times/week} = 9 \\text{ sprints per week}$.\n\n2.  **Calculate the total distance run:**\n    He runs 60 meters each sprint.\n    $9 \\text{ sprints} \\times 60 \\text{ meters/sprint} = 540 \\text{ meters}$.\n\nAnswer: 540\n</think>\n\nTo find the total distance James runs, we first determine the number of sprints he runs in a week and then multiply that by the distance of each sprint.\n\n1.  **Calculate the total number of sprints:**\n    James runs 3 sprints 3 times a week.\n    $3 \\text{ sprints} \\times 3 \\text{ times} = 9 \\text{ sprints per week}$.\n\n2.  **Calculate the total distance:**\n    He runs 60 meters per sprint.\n    $9 \\text{ sprints} \\times 60 \\text{ meters} = 540 \\text{ meters}$.\n\nAnswer: 540",
+   "tokens": 311,
+   "prompt_tps": 49.483169164473715,
+   "gen_tps": 28.783131822008453,
+   "segundos": 12.447535,
+   "memoria_pico_mb": 915.1
+  },
+  {
+   "idioma": "en",
+   "id": 5,
+   "correcta": "20",
+   "texto": "<think>\n\n</think>\n\nTo find the total amount of feed Wendi needs to give in the final meal, we need to calculate the daily feed consumption and then determine the amount for the last meal.\n\n1.  **Calculate the daily feed consumption per chicken:**\n    *   Feed per day per chicken = 3 cups (morning) + 25 cups (afternoon) = 28 cups.\n    *   Number of chickens = 20.\n    *   Total daily feed for the flock = 20 chickens × 28 cups/chicken = 560 cups.\n\n2.  **Calculate the feed given in the morning and afternoon:**\n    *   Morning feed = 15 cups.\n    *   Afternoon feed = 25 cups.\n    *   Total feed given so far = 15 cups + 25 cups = 40 cups.\n\n3.  **Calculate the feed needed for the final meal:**\n    *   The problem states she gives the feed in three separate meals.\n    *   Total daily feed = 560 cups.\n    *   Feed given in morning and afternoon = 40 cups.\n    *   Feed needed for the final meal = Total daily feed - (Morning feed + Afternoon feed).\n    *   Final meal feed = 560 cups - 40 cups = 520 cups.\n\nAlternatively, since there are three meals, the final meal is one-third of the total daily feed.\n*   Final meal feed = 560 cups / 3 = 186.66... cups.\n*   Wait, let's re-read carefully. \"She gives the chickens their feed in three separate meals.\"\n*   Does this mean the total daily amount is distributed equally among three meals?\n    *   If the flock eats 560 cups in total, and she gives them in 3 meals, each meal would be 560 / 3 = 186.67 cups.\n    *   However, the problem gives specific amounts for the morning and afternoon.\n    *   Morning: 15 cups.\n    *   Afternoon: 25 cups.\n    *   Total given so far: 40 cups.\n    *   Remaining for the final meal: 560 - 40 = 520 cups.\n    *   Is it",
+   "tokens": 512,
+   "prompt_tps": 50.42232662568399,
+   "gen_tps": 28.848017915353026,
+   "segundos": 20.866887000000002,
+   "memoria_pico_mb": 915.1
+  }
+ ],
+ "PQ2_0 / PrismML": [
+  {
+   "idioma": "es",
+   "id": 1,
+   "correcta": "18",
+   "texto": "<think>\n\n</think>\n\nPara resolver este problema, debemos calcular el número de huevos vendidos diariamente y luego multiplicarlo por el precio por huevo.\n\n1.  **Determinar los huevos usados:**\n    *   Los patos ponen 16 huevos por día.\n    *   Se usan 4 huevos para hornear magdalenas.\n    *   Se comen 3 huevos en el desayuno.\n    *   Total de huevos usados = 4 (para hornear) + 3 (comer) = 7 huevos.\n\n2.  **Calcular los huevos vendidos:**\n    *   Huevo vendido = Total de huevos - Huevos usados\n    *   Huevo vendido = 16 - 7 = 9 huevos.\n\n3.  **Calcular el ingreso:**\n    *   Precio por huevo = $2.\n    *   Ingreso total = 9 huevos × $2/huevo = $18.\n\nRespuesta: 18",
+   "tokens": 203,
+   "prompt_tps": 259.1452558614305,
+   "gen_tps": 76.83898125204936,
+   "segundos": 3.1343819999999996,
+   "memoria_pico_mb": 940.6
+  },
+  {
+   "idioma": "es",
+   "id": 2,
+   "correcta": "3",
+   "texto": "<think>\n\n</think>\n\nPara resolver este problema, primero debemos calcular la cantidad total de tela azul y luego sumar la mitad de la tela blanca a esa cantidad.\n\n1.  **Calcular la cantidad de tela azul:**\n    La bata lleva 2 rollos de tela azul.\n    Cantidad azul = 2 rollos.\n\n2.  **Calcular la mitad de la tela blanca:**\n    La mitad de la cantidad de tela azul (2 rollos) es 1 rollo.\n    Cantidad blanca = 1 rollo.\n\n3.  **Calcular el total:**\n    Total = Cantidad azul + Cantidad blanca\n    Total = 2 rollos + 1 rollo\n    Total = 3 rollos.\n\nRespuesta: 3",
+   "tokens": 156,
+   "prompt_tps": 83.26691805345736,
+   "gen_tps": 77.57878125236176,
+   "segundos": 3.006773,
+   "memoria_pico_mb": 940.6
+  },
+  {
+   "idioma": "es",
+   "id": 3,
+   "correcta": "70000",
+   "texto": "<think>\n\n</think>\n\nPara resolver este problema, primero debemos calcular el valor total de la casa después de las reparaciones y luego determinar el valor de la ganancia.\n\n1.  **Calcular el valor total de la casa:**\n    *   Valor inicial: $80,000\n    *   Valor de reparaciones: $50,000\n    *   Valor total = $80,000 + $50,000 = $130,000\n\n2.  **Calcular el aumento del valor (150%):**\n    *   El aumento se calcula multiplicando el valor total por el 150%.\n    *   Aumento = $130,000 \\times 0.15 = $19,500\n    *   *Otra forma de verlo:* El valor final es el valor inicial más el aumento, o simplemente el 250% del valor inicial ($130,000 \\times 1.5 = $195,000$).\n\n3.  **Calcular la ganancia:**\n    *   La ganancia es el valor final menos el valor inicial.\n    *   Ganancia = Valor Final - Valor Inicial\n    *   Ganancia = $195,000 - $80,000 = $115,000\n    *   *Otra forma de verlo:* Ganancia = Valor Total \\times 0.15 = $130,000 \\times 0.15 = $19,500$.\n    *   *Nota:* A veces en problemas de \"ganancia\" se refiere al valor añadido, pero el término \"obtener de ganancia\" suele significar el beneficio neto. Sin embargo, revisando el contexto de \"aumenta un 150% el valor\", el valor total es el 150% del valor original. La ganancia sobre el valor original es $19,500$.\n    *   *Re-evaluación:* ¿Se pregunta por la ganancia sobre el valor original o sobre el valor total?\n        *   Interpretación A: Ganancia sobre el precio original ($80k). Ganancia = $130k - $80k = $50k$. Pero el aumento es del valor total",
+   "tokens": 512,
+   "prompt_tps": 384.7157912092441,
+   "gen_tps": 76.5410743970256,
+   "segundos": 6.967278,
+   "memoria_pico_mb": 940.6
+  },
+  {
+   "idioma": "es",
+   "id": 4,
+   "correcta": "540",
+   "texto": "<think>\n\n</think>\n\nPara resolver este problema, debemos calcular el total de metros corridos en una semana.\n\n1.  **Determinar el número de carreras por semana:**\n    James corre 3 carreras por semana.\n    *   Número de carreras = 3\n\n2.  **Determinar el número de veces por carrera:**\n    Las carreras se realizan 3 veces por semana.\n    *   Velocidad por carrera = 3\n\n3.  **Calcular el total de carreras por semana:**\n    Total de carreras = 3 carreras/carrera × 3 veces/carrera = 9 carreras por semana.\n\n4.  **Calcular el total de metros:**\n    James corre 60 metros en cada carrera.\n    Total de metros = 9 carreras/week × 60 metros/carrera = 540 metros.\n\nOtra forma de verlo:\n*   Metros por semana por carrera = 3 carreras/week × 3 veces/carrera × 60 metros = 540 metros.\n\nRespuesta: 540",
+   "tokens": 226,
+   "prompt_tps": 270.62858810937047,
+   "gen_tps": 78.27810436176034,
+   "segundos": 3.203231,
+   "memoria_pico_mb": 940.6
+  },
+  {
+   "idioma": "es",
+   "id": 5,
+   "correcta": "20",
+   "texto": "<think>\n\n</think>\n\nPara resolver este problema, debemos calcular el total de tazas de alimento que Wendi da en el primer día y luego determinar cuántas tazas se necesitan para la última comida.\n\n1.  **Calcular el total de tazas en el primer día:**\n    *   La mañana se da 15 tazas.\n    *   La tarde se da 25 tazas.\n    *   Total = 15 + 25 = 40 tazas.\n\n2.  **Determinar el número de pollos:**\n    *   La bandada tiene 20 pollos.\n\n3.  **Calcular el consumo diario por pollo:**\n    *   Cada pollo recibe 3 tazas por comida.\n    *   Total de comidas = 3 comidas (mañana, tarde y última).\n    *   Consumo diario por pollo = 3 tazas/pollo × 3 comidas = 9 tazas/pollo.\n\n4.  **Calcular el total de tazas necesarias para la última comida:**\n    *   Total de tazas para 20 pollos en 3 comidas = 20 pollos × 3 comidas/pollo × 3 tazas/comida = 180 tazas.\n    *   *Nota: El problema pregunta por la cantidad necesaria para la última comida específica, no por el total diario.*\n\n5.  **Reinterpretación del problema:**\n    *   La pregunta es: \"¿Cuántas tazas de alimento necesita darle a sus pollos en la última comida del día?\"\n    *   Esto significa: ¿Cuántas tazas se dan en una sola comida para cubrir a todos los pollos?\n    *   Consumo por comida = 20 pollos × 3 tazas/pollo = 60 tazas.\n\n    *   *Verificación alternativa:* ¿Podría interpretarse que se repiten las comidas? \"Alimenta a los pollos en tres comidas separadas.\" Esto confirma que hay 3 comidas por día.\n    *   La cantidad de tazas en la última comida es la misma que en todas las otras comidas (3 tazas por pollo).\n    *   Cálculo: 20 pollos × 3 tazas = 60 tazas.\n\n    *   *Otra interpretación posible (menos probable pero posible):* ¿Se repiten las comidas para el total",
+   "tokens": 512,
+   "prompt_tps": 259.3899149201079,
+   "gen_tps": 76.76196115844765,
+   "segundos": 7.350879,
+   "memoria_pico_mb": 940.6
+  },
+  {
+   "idioma": "en",
+   "id": 1,
+   "correcta": "18",
+   "texto": "<think>\n\n</think>\n\nHere is the step-by-step solution:\n\n1.  **Calculate the total number of eggs Janet lays per day:**\n    She lays 16 eggs per day.\n\n2.  **Calculate the number of eggs she eats:**\n    She eats 3 eggs per day for breakfast.\n    $16 - 3 = 13$ eggs remaining.\n\n3.  **Calculate the number of muffins baked per day:**\n    She bakes muffins for her friends every day with 4 muffins.\n    *Note: The problem states she bakes muffins, but does not specify how many eggs are used for them. However, the question asks for the money made from selling the \"remainder\" of the eggs.*\n    *Assumption:* The number of muffins does not affect the calculation of the remaining eggs, as the problem implies the 4 muffins are a separate activity not tied to the egg count in the context of the sale. The key is the \"remainder\" of the eggs.\n\n4.  **Calculate the number of remaining eggs:**\n    $16 \\text{ (total)} - 3 \\text{ (eaten)} = 13 \\text{ eggs remaining}$.\n\n5.  **Calculate the revenue from selling the remaining eggs:**\n    She sells the remainder at $2 per egg.\n    $13 \\text{ eggs} \\times \\$2/\\text{egg} = \\$26$.\n\nAnswer: 26\nAnswer: 26",
+   "tokens": 319,
+   "prompt_tps": 316.6435780724322,
+   "gen_tps": 78.83465521861866,
+   "segundos": 4.387469,
+   "memoria_pico_mb": 939.7
+  },
+  {
+   "idioma": "en",
+   "id": 2,
+   "correcta": "3",
+   "texto": "<think>\n\n</think>\n\nTo find the total number of bolts required, we need to calculate the amount of each type of fiber and then add them together.\n\n1.  **Identify the amount of blue fiber:** The problem states that the robe takes \"2 bolts of blue fiber\".\n2.  **Calculate the amount of white fiber:** The problem states that the white fiber is \"half that much\" (half of the blue fiber).\n    *   Half of 2 bolts is $2 / 2 = 1$ bolt.\n3.  **Calculate the total number of bolts:** Add the amount of blue fiber and the amount of white fiber together.\n    *   Total = Blue fibers + White fibers\n    *   Total = $2 + 1 = 3$ bolts.\n\nAnswer: 3",
+   "tokens": 166,
+   "prompt_tps": 312.91095991779747,
+   "gen_tps": 75.77577168438519,
+   "segundos": 2.413966,
+   "memoria_pico_mb": 939.7
+  },
+  {
+   "idioma": "en",
+   "id": 3,
+   "correcta": "70000",
+   "texto": "<think>\n\n</think>\n\nTo find the profit Josh made, we need to calculate the total cost of the house and repairs and then determine the profit based on the value increase.\n\n1.  **Calculate the total cost:**\n    *   Purchase price of the house: $80,000\n    *   Repairs cost: $50,000\n    *   Total cost = $80,000 + $50,000 = $130,000\n\n2.  **Calculate the increase in value:**\n    *   The problem states the value increased by 150%.\n    *   Increase amount = $80,000 \\times 1.50 = $120,000$\n\n3.  **Calculate the profit:**\n    *   Profit is defined as the gain from the transaction. In this context, the \"gain\" is the value increase relative to the purchase price. However, sometimes profit is calculated as (Selling Price - Cost).\n    *   Let's look at the wording carefully: \"This increased the value of the house by 150%.\" This usually means the new value is 250% of the original value.\n    *   Original Value = $80,000.\n    *   New Value = $80,000 \\times 1.50 = $120,000.\n    *   The profit is the difference between the new value and the original cost? Or is it the profit from the sale?\n    *   Usually, in these types of word problems, \"profit\" refers to the net gain from the transaction described. The transaction involved buying for $80k and spending $50k. The result is a value increase of $120k.\n    *   If we interpret \"profit\" strictly as (New Value - Cost), the profit would be $120,000 - $80,000 = $40,000.\n    *   Alternatively, if we consider the cost basis, the profit is often calculated as (Selling Price - Cost). But here, the selling price isn't explicitly given, only the value increase.\n    *   Let's re-read: \"How much profit did he make?\"\n    *   Scenario A: He spent $130,000.",
+   "tokens": 512,
+   "prompt_tps": 342.1075781715816,
+   "gen_tps": 74.28177446512397,
+   "segundos": 7.186132000000001,
+   "memoria_pico_mb": 939.7
+  },
+  {
+   "idioma": "en",
+   "id": 4,
+   "correcta": "540",
+   "texto": "<think>\n\n</think>\n\nTo find the total number of meters James runs a week, we need to calculate the number of sprints per week and then multiply that by the distance of each sprint.\n\n1.  **Calculate the total number of sprints per week:**\n    James runs 3 sprints 3 times a week.\n    $3 \\text{ sprints} \\times 3 \\text{ times/week} = 9 \\text{ sprints per week}$.\n\n2.  **Calculate the total distance run:**\n    He runs 60 meters each sprint.\n    $9 \\text{ sprints} \\times 60 \\text{ meters/sprint} = 540 \\text{ meters}$.\n\nAnswer: 540\n</think>\n\nTo find the total distance James runs, we first determine the number of sprints he runs in a week and then multiply that by the distance of each sprint.\n\n1.  **Calculate the total number of sprints:**\n    James runs 3 sprints 3 times a week.\n    $3 \\text{ sprints} \\times 3 \\text{ times} = 9 \\text{ sprints per week}$.\n\n2.  **Calculate the total distance:**\n    He runs 60 meters per sprint.\n    $9 \\text{ sprints} \\times 60 \\text{ meters} = 540 \\text{ meters}$.\n\nAnswer: 540",
+   "tokens": 311,
+   "prompt_tps": 379.8261951940546,
+   "gen_tps": 79.25646189438795,
+   "segundos": 4.129874,
+   "memoria_pico_mb": 939.7
+  },
+  {
+   "idioma": "en",
+   "id": 5,
+   "correcta": "20",
+   "texto": "<think>\n\n</think>\n\nTo find the total amount of feed Wendi needs to give in the final meal, we need to calculate the daily feed consumption and determine the amount for the last meal.\n\n1.  **Calculate the daily feed consumption:**\n    *   Number of chickens: 20\n    *   Feed per chicken per day: 3 cups\n    *   Total daily feed = 20 chickens $\\times$ 3 cups/chicken = 60 cups.\n\n2.  **Calculate the feed given in the morning and afternoon:**\n    *   Morning feed: 15 cups\n    *   Afternoon feed: 25 cups\n    *   Total feed given so far = 15 cups + 25 cups = 40 cups.\n\n3.  **Calculate the feed needed for the final meal:**\n    *   The problem asks for the amount needed for the \"final meal of the day\".\n    *   Assuming the feed is distributed evenly throughout the day (morning, afternoon, and final meal), we can divide the total daily consumption by the number of meals.\n    *   Number of meals: 3\n    *   Final meal feed = Total daily feed / Number of meals\n    *   Final meal feed = 60 cups / 3 meals = 20 cups.\n\nAlternatively, if the feed is given in equal portions:\n*   Morning: 15 cups\n*   Afternoon: 25 cups\n*   Remaining feed needed for the day: 60 - 40 = 20 cups.\n*   Since there are 3 meals, the final meal gets 20 / 3 = 6.66 cups? No, that interpretation is incorrect based on the wording \"gives her flock... in three separate meals\". Usually, in these math problems, the distribution is equal unless specified otherwise.\n*   Let's re-read carefully: \"She gives the chickens their feed in three separate meals.\"\n*   Total feed = 60 cups.\n*   Meals = 3.\n*   Feed per meal = 60 / 3 = 20 cups.\n*   The question asks for the amount in the \"final meal\".\n*   Therefore, the final meal gets 20 cups.\n\nAnswer: 20\n\nAnswer: 20",
+   "tokens": 494,
+   "prompt_tps": 274.26040249007747,
+   "gen_tps": 75.4904544387545,
+   "segundos": 7.110368,
+   "memoria_pico_mb": 939.7
+  }
+ ]
+}

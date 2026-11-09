@@ -1,0 +1,175 @@
+{
+  "fecha": "2026-10-26T14:24:21.098410-06:00",
+  "estado": "pendiente por red; usuario pidió preparar reanudación",
+  "ollama": "0.40.11 instalado; arranque CPU y API verificados; servicio cerrado",
+  "modelos": [
+    {
+      "nombre": "bitnet-2b",
+      "revision": "a1f2f1c765812aa8af3f6eda4a313707064bba15",
+      "archivos": [
+        {
+          "archivo": "ggml-model-i2_s.gguf",
+          "bytes_esperados": 1187801280,
+          "bytes_recibidos": 0,
+          "archivo_completo": false
+        }
+      ]
+    },
+    {
+      "nombre": "falcon3-3b-ternario",
+      "revision": "ff136ed71092bf3098578b7e48739fb664ca57c4",
+      "archivos": [
+        {
+          "archivo": "config.json",
+          "bytes_esperados": 880,
+          "bytes_recibidos": 880,
+          "archivo_completo": true
+        },
+        {
+          "archivo": "generation_config.json",
+          "bytes_esperados": 118,
+          "bytes_recibidos": 118,
+          "archivo_completo": true
+        },
+        {
+          "archivo": "model.safetensors",
+          "bytes_esperados": 2216482588,
+          "bytes_recibidos": 0,
+          "archivo_completo": false
+        },
+        {
+          "archivo": "special_tokens_map.json",
+          "bytes_esperados": 826,
+          "bytes_recibidos": 826,
+          "archivo_completo": true
+        },
+        {
+          "archivo": "tokenizer.json",
+          "bytes_esperados": 9780754,
+          "bytes_recibidos": 9780754,
+          "archivo_completo": true
+        },
+        {
+          "archivo": "tokenizer_config.json",
+          "bytes_esperados": 364623,
+          "bytes_recibidos": 364623,
+          "archivo_completo": true
+        }
+      ]
+    },
+    {
+      "nombre": "bonsai2-2b-ternario",
+      "revision": "683f7be2629342a50987627b40881e54761a2430",
+      "archivos": [
+        {
+          "archivo": "SHA256SUMS",
+          "bytes_esperados": 497,
+          "bytes_recibidos": 497,
+          "archivo_completo": true
+        },
+        {
+          "archivo": "Ternary-Bonsai-2-2B-Q2_0.gguf",
+          "bytes_esperados": 546689504,
+          "bytes_recibidos": 0,
+          "archivo_completo": false
+        }
+      ]
+    },
+    {
+      "nombre": "falcon3-3b-q4",
+      "revision": "142f28a7f0ec90e701157ec3c4e9842e9471dfcd",
+      "archivos": [
+        {
+          "archivo": "Falcon3-3B-Instruct-q4_k_m.gguf",
+          "bytes_esperados": 2005684448,
+          "bytes_recibidos": 8388608,
+          "archivo_completo": false
+        }
+      ]
+    },
+    {
+      "nombre": "qwen2.5-1.5b-q4",
+      "revision": "91cad51170dc346986eccefdc2dd33a9da36ead9",
+      "archivos": [
+        {
+          "archivo": "qwen2.5-1.5b-instruct-q4_k_m.gguf",
+          "bytes_esperados": 1117320736,
+          "bytes_recibidos": 0,
+          "archivo_completo": false
+        }
+      ]
+    },
+    {
+      "nombre": "qwen3.5-2b-q4",
+      "revision": "15852e8c16360a2fea060d615a32b45270f8a8fc",
+      "archivos": [
+        {
+          "archivo": "LICENSE",
+          "bytes_esperados": 11544,
+          "bytes_recibidos": 11544,
+          "archivo_completo": true
+        },
+        {
+          "archivo": "chat_template.jinja",
+          "bytes_esperados": 7755,
+          "bytes_recibidos": 7755,
+          "archivo_completo": true
+        },
+        {
+          "archivo": "config.json",
+          "bytes_esperados": 2908,
+          "bytes_recibidos": 2908,
+          "archivo_completo": true
+        },
+        {
+          "archivo": "merges.txt",
+          "bytes_esperados": 3353259,
+          "bytes_recibidos": 3353259,
+          "archivo_completo": true
+        },
+        {
+          "archivo": "model.safetensors-00001-of-00001.safetensors",
+          "bytes_esperados": 4548221488,
+          "bytes_recibidos": 0,
+          "archivo_completo": false
+        },
+        {
+          "archivo": "model.safetensors.index.json",
+          "bytes_esperados": 64460,
+          "bytes_recibidos": 64460,
+          "archivo_completo": true
+        },
+        {
+          "archivo": "preprocessor_config.json",
+          "bytes_esperados": 390,
+          "bytes_recibidos": 390,
+          "archivo_completo": true
+        },
+        {
+          "archivo": "tokenizer.json",
+          "bytes_esperados": 12807982,
+          "bytes_recibidos": 12807982,
+          "archivo_completo": true
+        },
+        {
+          "archivo": "tokenizer_config.json",
+          "bytes_esperados": 16709,
+          "bytes_recibidos": 16709,
+          "archivo_completo": true
+        },
+        {
+          "archivo": "video_preprocessor_config.json",
+          "bytes_esperados": 385,
+          "bytes_recibidos": 385,
+          "archivo_completo": true
+        },
+        {
+          "archivo": "vocab.json",
+          "bytes_esperados": 6722759,
+          "bytes_recibidos": 6722759,
+          "archivo_completo": true
+        }
+      ]
+    }
+  ]
+}

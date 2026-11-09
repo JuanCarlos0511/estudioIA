@@ -1,0 +1,2 @@
+User: Clasifica el sentimiento de la siguiente reseña de un producto. Responde solo con una palabra: positivo, negativo o neutral.
+Reseña: "El envío llegó un día antes de lo prometido y el producto funciona perfecto."<|eot_id|>Assistant: 

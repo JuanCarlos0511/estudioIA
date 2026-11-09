@@ -1,0 +1,12 @@
+2026-10-26T20:26:51-06:00
+0b341e582afbf9e1011f24744b554c96a3477eb5
+ 390c307752ab78fd8189f359d6954c9ba1be74af 3rdparty/llama.cpp (390c307)
+63b4b303bd87456adc2f09d56c7e1f74e9e26673
+modelos/bitnet-2b/ggml-model-i2_s.gguf	1187801280 bytes
+modelos/falcon3-3b-ternario/ggml-model-f32.gguf	12915363232 bytes
+modelos/falcon3-3b-ternario/ggml-model-i2_s.gguf	2221465856 bytes
+modelos/bonsai2-2b-ternario/Ternary-Bonsai-2-2B-Q2_0.gguf	546689504 bytes
+modelos/falcon3-3b-q4/Falcon3-3B-Instruct-q4_k_m.gguf	2005684448 bytes
+modelos/qwen2.5-1.5b-q4/qwen2.5-1.5b-instruct-q4_k_m.gguf	1117320736 bytes
+modelos/qwen3.5-2b-q4/Qwen3.5-2B-F16.gguf	3897387616 bytes
+modelos/qwen3.5-2b-q4/Qwen3.5-2B-Q4_K_M.gguf	1312164448 bytes
