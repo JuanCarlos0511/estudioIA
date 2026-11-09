@@ -180,6 +180,15 @@ una ejecución nueva quedaría en cola detrás de ella. Una corrida lanzada a la
 23:26 en una VM estándar, con la carga anterior, siguió compilando después de
 interrumpir el lanzador.
 
+9 de noviembre: si faltan los GGUF o los motores locales, el lanzador usa
+`colab/referencia.json`, generado en esta laptop, para que otra persona lance la
+corrida con su cuenta sin instalar nada (ver `README.md`). Cada corrida guarda su
+tipo de VM en `forma_vm.txt` y lo repite al reanudar. La corrida estándar lanzada
+el 8 de noviembre a las 23:50 siguió en la VM cuando, a las 00:31, el cierre de
+la sesión gráfica apagó el gestor de servicios del usuario (sin linger) y con él
+el lanzador. Al relanzarlo, el lanzador la retomó y siguió descargando respaldos;
+la VM ya convertía Falcon con el archivo temporal.
+
 Fuentes oficiales:
 
 - [CLI de Google Colab](https://github.com/googlecolab/google-colab-cli).
