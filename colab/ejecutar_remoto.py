@@ -26,6 +26,9 @@ RESULTS = ROOT / "pruebas" / "resultados"
 ARCHIVE = Path("/content/estudioIA-resultados.zip")
 STATE = ROOT / "estado.json"
 SNAPSHOT_LOCK = threading.Lock()
+# Tras terminar, el kernel sigue activo este tiempo para que la VM no se libere
+# por inactividad antes de que el lanzador descargue el respaldo final.
+ESPERA_RECOGIDA = 12 * 3600
 
 
 def now():
@@ -51,10 +54,14 @@ def write_state(status, **details):
 def snapshot():
     with SNAPSHOT_LOCK:
         tmp = ARCHIVE.with_suffix(".zip.part")
-        paths = [STATE, ROOT / "hardware.json", ROOT / "procedencia.json"]
+        paths = [ROOT / "hardware.json", ROOT / "procedencia.json"]
         paths += list(RESULTS.rglob("*")) if RESULTS.exists() else []
         paths += list((ROOT / "registros").glob("*.log"))
         with zipfile.ZipFile(tmp, "w", compression=zipfile.ZIP_DEFLATED) as archive:
+            # El latido indica al lanzador que la corrida sigue viva.
+            state = json.loads(STATE.read_text()) if STATE.exists() else {}
+            archive.writestr("estado.json", json.dumps({**state, "latido": now()},
+                                                       indent=2, ensure_ascii=False))
             for path in paths:
                 if path.is_file() and not path.name.endswith(".part"):
                     archive.write(path, path.relative_to(ROOT))
@@ -109,7 +116,9 @@ def clone(url, revision, destination):
         run(["git", "-C", destination, "checkout", "--detach", "FETCH_HEAD"])
 
 
-def restore(path, payload, hardware):
+def restore(path, payload):
+    # Se llama antes del primer respaldo: así un ZIP descargado mientras se
+    # prepara una VM nueva conserva las respuestas y el hardware anteriores.
     if not path.exists():
         return
     with zipfile.ZipFile(path) as archive:
@@ -117,20 +126,24 @@ def restore(path, payload, hardware):
         for key in ("ejecucion_id", "laboratorio_commit", "archivos_comunes", "modelos", "motores"):
             if previous.get(key) != payload.get(key):
                 raise RuntimeError("El respaldo usa otro código o modelos. Usa --salida para otra corrida.")
-        if "hardware.json" in archive.namelist():
-            previous_hardware = json.loads(archive.read("hardware.json"))
-            for key in ("hilos", "ram_bytes", "modelo_cpu"):
-                if previous_hardware.get(key) != hardware.get(key):
-                    raise RuntimeError("El hardware de Colab cambió; usa --salida para separar las mediciones.")
         for entry in archive.infolist():
             name = Path(entry.filename)
-            allowed = name.parts[:2] == ("pruebas", "resultados")
+            allowed = name.parts[:2] == ("pruebas", "resultados") or name == Path("hardware.json")
             if not allowed or name.is_absolute() or ".." in name.parts:
                 continue
             destination = ROOT / name
             if not entry.is_dir() and not destination.exists():
                 destination.parent.mkdir(parents=True, exist_ok=True)
                 destination.write_bytes(archive.read(entry))
+
+
+def check_hardware(hardware):
+    path = ROOT / "hardware.json"
+    if path.exists():
+        previous = json.loads(path.read_text())
+        for key in ("hilos", "ram_bytes", "modelo_cpu"):
+            if previous.get(key) != hardware.get(key):
+                raise RuntimeError("El hardware de Colab cambió; usa --salida para separar las mediciones.")
 
 
 def setup(payload):
@@ -273,7 +286,7 @@ def setup(payload):
                             for line in Path("/proc/cpuinfo").read_text().splitlines()
                             if line.startswith("model name")), "desconocido"),
     }
-    restore(Path(f"/content/estudioIA-{payload['ejecucion_id']}-reanudar.zip"), payload, hardware)
+    check_hardware(hardware)
     (ROOT / "hardware.json").write_text(json.dumps(hardware, indent=2))
     return lab, cfg
 
@@ -326,6 +339,9 @@ def main(payload):
     with (ROOT / "experimento.lock").open("w") as lock:
         fcntl.flock(lock, fcntl.LOCK_EX | fcntl.LOCK_NB)
         run_experiment(payload)
+    # Si la laptop está apagada, la VM espera con los resultados; el lanzador
+    # la detiene en cuanto descarga el respaldo final.
+    time.sleep(ESPERA_RECOGIDA)
 
 
 def run_experiment(payload):
@@ -341,9 +357,10 @@ def run_experiment(payload):
                 print(f"AVISO respaldo: {exc}", flush=True)
 
     thread = threading.Thread(target=heartbeat, daemon=True)
-    thread.start()
     code = 0
     try:
+        restore(Path(f"/content/estudioIA-{payload['ejecucion_id']}-reanudar.zip"), payload)
+        thread.start()
         lab, cfg = setup(payload)
         experiment(lab, cfg, payload)
         write_state("completo", fin=now())
@@ -353,7 +370,8 @@ def run_experiment(payload):
         traceback.print_exc()
     finally:
         stop.set()
-        thread.join(timeout=65)
+        if thread.is_alive():
+            thread.join(timeout=65)
         snapshot()
     print("ESTUDIOIA_FINAL " + str(code), flush=True)
 

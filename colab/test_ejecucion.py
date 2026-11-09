@@ -1,5 +1,6 @@
 """Pruebas locales de respaldos y control de la corrida; no alquilan una VM."""
 import contextlib
+import datetime
 import importlib.util
 import io
 import json
@@ -72,18 +73,24 @@ class CheckpointTests(unittest.TestCase):
         self.assertTrue((self.root / "local" / "pruebas/resultados/m_es.jsonl").is_file())
         self.assertFalse((self.root / "local" / "secreto.json").exists())
 
-    def test_restore_rejects_different_models_and_hardware(self):
+    def test_restore_rejects_different_models(self):
         payload = {"ejecucion_id": "run", "modelos": {"a": "hash"}}
-        hardware = {"hilos": 2, "ram_bytes": 100, "modelo_cpu": "CPU1"}
-        different = {**hardware, "hilos": 8}
-        path = self.archive({"procedencia.json": payload, "hardware.json": different,
+        path = self.archive({"procedencia.json": payload,
                              "pruebas/resultados/una.jsonl": '{"id":1}\n'})
         with patch.object(remote, "ROOT", self.root / "destino"):
-            with self.assertRaisesRegex(RuntimeError, "hardware"):
-                remote.restore(path, payload, hardware)
             with self.assertRaisesRegex(RuntimeError, "otro código"):
-                remote.restore(path, {**payload, "modelos": {}}, different)
+                remote.restore(path, {**payload, "modelos": {}})
         self.assertFalse((self.root / "destino").exists())
+
+    def test_rejects_different_hardware_after_restore(self):
+        payload = {"ejecucion_id": "run"}
+        hardware = {"hilos": 2, "ram_bytes": 100, "modelo_cpu": "CPU1"}
+        path = self.archive({"procedencia.json": payload, "hardware.json": hardware})
+        with patch.object(remote, "ROOT", self.root / "destino"):
+            remote.restore(path, payload)
+            remote.check_hardware(hardware)
+            with self.assertRaisesRegex(RuntimeError, "hardware"):
+                remote.check_hardware({**hardware, "hilos": 8})
 
     def test_restore_never_replaces_code(self):
         payload = {"ejecucion_id": "run"}
@@ -91,9 +98,32 @@ class CheckpointTests(unittest.TestCase):
                              "pruebas/laboratorio.py": "codigo alterado",
                              "pruebas/resultados/m_es.jsonl": '{"id":1}\n'})
         with patch.object(remote, "ROOT", self.root / "destino"):
-            remote.restore(path, payload, {})
+            remote.restore(path, payload)
         self.assertFalse((self.root / "destino/pruebas/laboratorio.py").exists())
         self.assertTrue((self.root / "destino/pruebas/resultados/m_es.jsonl").is_file())
+
+    def test_first_snapshot_of_new_vm_keeps_previous_responses(self):
+        # Al reanudar en otra VM, el primer respaldo (aún preparando) reemplaza
+        # el ZIP local; debe conservar las respuestas y el hardware anteriores.
+        payload = {"ejecucion_id": "run"}
+        path = self.archive({"procedencia.json": payload,
+                             "hardware.json": {"hilos": 4},
+                             "pruebas/resultados/m_es.jsonl": '{"id":1}\n'})
+        vm = self.root / "vm"
+        (vm / "registros").mkdir(parents=True)
+        (vm / "estado.json").write_text('{"status":"preparando"}')
+        with patch.multiple(remote, ROOT=vm, RESULTS=vm / "pruebas/resultados",
+                            STATE=vm / "estado.json", ARCHIVE=self.root / "respaldo.zip"):
+            remote.restore(path, payload)
+            with contextlib.redirect_stdout(io.StringIO()):
+                remote.snapshot()
+        with zipfile.ZipFile(self.root / "respaldo.zip") as archive:
+            names = archive.namelist()
+            state = json.loads(archive.read("estado.json"))
+        self.assertIn("pruebas/resultados/m_es.jsonl", names)
+        self.assertIn("hardware.json", names)
+        self.assertEqual(state["status"], "preparando")
+        self.assertTrue(local.alive(state))
 
 
 class CloneTests(unittest.TestCase):
@@ -161,15 +191,22 @@ class LifecycleTests(unittest.TestCase):
                 cli.assert_not_called()
                 compile((Path(temp) / "ejecutar_remoto.py").read_text(), "carga", "exec")
 
-    def run_fake(self, remote_status, exec_return=0):
+    def run_fake(self, remote_status, exec_return=0, known=None, states=None, extra_args=()):
+        """Simula el CLI; ``states`` son los estado.json que devuelve cada descarga."""
+        fresh = datetime.datetime.now(datetime.timezone.utc).isoformat(timespec="seconds")
+        states = list(states or [])
         with tempfile.TemporaryDirectory() as temp:
             directory = Path(temp)
+            sessions = directory / "sesiones.json"
+            if known:
+                sessions.write_text(json.dumps(known))
             calls = []
             def fake_cli(*args, **kwargs):
                 calls.append(args)
                 if args[0] == "download":
+                    state = states.pop(0) if states else {"status": remote_status, "latido": fresh}
                     with zipfile.ZipFile(args[-1], "w") as archive:
-                        archive.writestr("estado.json", json.dumps({"status": remote_status}))
+                        archive.writestr("estado.json", json.dumps(state))
                 return subprocess.CompletedProcess(args, 0)
             class FakeProcess:
                 stdout = io.StringIO("ESTUDIOIA_CHECKPOINT /content/resultados.zip\nESTUDIOIA_FINAL 0\n")
@@ -177,16 +214,20 @@ class LifecycleTests(unittest.TestCase):
                     return exec_return
                 def poll(self):
                     return exec_return
-            with patch.object(sys, "argv", ["runner", "--salida", str(directory)]), \
+                def terminate(self):
+                    pass
+            with patch.object(sys, "argv", ["runner", "--salida", str(directory), *extra_args]), \
                  patch.object(local, "make_payload", return_value={}), \
-                 patch.object(local, "SESSION_FILE", directory / "sesiones.json"), \
+                 patch.object(local, "SESSION_FILE", sessions), \
                  patch.object(local, "cli", side_effect=fake_cli), \
-                 patch.object(local.subprocess, "Popen", return_value=FakeProcess()), \
+                 patch.object(local.subprocess, "Popen", return_value=FakeProcess()) as popen, \
+                 patch.object(local.time, "sleep"), \
                  contextlib.redirect_stdout(io.StringIO()):
                 try:
                     result = local.main()
                 except RuntimeError:
                     result = "error"
+            self.popen = popen
             return result, calls
 
     def test_remote_failure_is_not_success_even_if_cli_returns_zero(self):
@@ -201,6 +242,88 @@ class LifecycleTests(unittest.TestCase):
         self.assertEqual(calls[-1][0], "stop")
         downloads = [i for i, call in enumerate(calls) if call[0] == "download"]
         self.assertTrue(downloads and max(downloads) < len(calls) - 1)
+
+    def test_requests_high_ram_unless_standard(self):
+        _, calls = self.run_fake("completo")
+        self.assertIn(("new", "-s", "laboratorio-cpu", "--high-mem"), calls)
+        _, calls = self.run_fake("completo", extra_args=["--estandar"])
+        self.assertIn(("new", "-s", "laboratorio-cpu"), calls)
+
+    def test_reattaches_to_run_that_continued_without_laptop(self):
+        # La terminal se cerró: la sesión quedó marcada como ocupada y la VM
+        # sigue corriendo. No se ejecuta de nuevo; se descargan sus respaldos.
+        now = datetime.datetime.now(datetime.timezone.utc).isoformat(timespec="seconds")
+        known = {"laboratorio-cpu": {"running": "exec(ejecutar_remoto.py)"}}
+        result, calls = self.run_fake("completo", known=known, states=[
+            {"status": "corriendo", "latido": now},
+            {"status": "corriendo", "latido": now},
+        ])
+        self.assertEqual(result, 0)
+        self.popen.assert_not_called()
+        self.assertNotIn("new", [call[0] for call in calls])
+        self.assertNotIn("upload", [call[0] for call in calls])
+        self.assertEqual(calls[-1][0], "stop")
+
+    def test_collects_run_that_finished_without_laptop(self):
+        result, calls = self.run_fake("completo", known={"laboratorio-cpu": {}})
+        self.assertEqual(result, 0)
+        self.popen.assert_not_called()
+        self.assertEqual(calls[-1][0], "stop")
+
+    def test_resumes_when_remote_run_stopped(self):
+        # Latido viejo: el kernel ya no corre la tarea; se reanuda en la misma VM.
+        result, calls = self.run_fake("completo", known={"laboratorio-cpu": {}}, states=[
+            {"status": "corriendo", "latido": "2026-01-01T00:00:00+00:00"},
+        ])
+        self.assertEqual(result, 0)
+        self.popen.assert_called_once()
+        self.assertIn("upload", [call[0] for call in calls])
+        self.assertEqual(calls[-1][0], "stop")
+
+    def test_refuses_vm_running_previous_payload(self):
+        result, calls = self.run_fake("completo", known={"laboratorio-cpu": {}},
+                                      states=[{"status": "preparando"}])
+        self.assertEqual(result, "error")
+        self.popen.assert_not_called()
+        self.assertNotIn("stop", [call[0] for call in calls])
+
+    def test_keeps_vm_when_final_download_fails(self):
+        def failing_download(*args, **kwargs):
+            if args[0] == "download":
+                raise subprocess.CalledProcessError(1, args)
+            return subprocess.CompletedProcess(args, 0)
+        with tempfile.TemporaryDirectory() as temp:
+            class FakeProcess:
+                stdout = io.StringIO("ESTUDIOIA_CHECKPOINT x\nESTUDIOIA_FINAL 0\n")
+                def wait(self, **kwargs):
+                    return 0
+                def poll(self):
+                    return 0
+                def terminate(self):
+                    pass
+            with patch.object(sys, "argv", ["runner", "--salida", temp]), \
+                 patch.object(local, "make_payload", return_value={}), \
+                 patch.object(local, "SESSION_FILE", Path(temp) / "sesiones.json"), \
+                 patch.object(local, "cli", side_effect=failing_download) as cli, \
+                 patch.object(local.subprocess, "Popen", return_value=FakeProcess()), \
+                 contextlib.redirect_stdout(io.StringIO()):
+                with self.assertRaises(subprocess.CalledProcessError):
+                    local.main()
+            self.assertNotIn("stop", [call.args[0] for call in cli.call_args_list])
+
+    def test_backup_of_other_code_is_rejected_before_connecting(self):
+        with tempfile.TemporaryDirectory() as temp:
+            (Path(temp) / "ejecucion_id.txt").write_text("run")
+            with zipfile.ZipFile(Path(temp) / "ultimo.zip", "w") as archive:
+                archive.writestr("estado.json", json.dumps({"status": "fallido"}))
+                archive.writestr("procedencia.json", json.dumps({"ejecucion_id": "run", "modelos": {"a": 1}}))
+            with patch.object(sys, "argv", ["runner", "--salida", temp]), \
+                 patch.object(local, "make_payload", return_value={"modelos": {"a": 2}}), \
+                 patch.object(local, "cli") as cli, \
+                 contextlib.redirect_stdout(io.StringIO()):
+                with self.assertRaisesRegex(RuntimeError, "otro código"):
+                    local.main()
+                cli.assert_not_called()
 
     def test_connection_failure_never_allocates_vm(self):
         with tempfile.TemporaryDirectory() as temp:

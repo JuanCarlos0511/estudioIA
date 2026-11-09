@@ -8,7 +8,8 @@ Después de autenticarte, desde esta carpeta:
 bash bin/experimentar_colab.sh
 ```
 
-El lanzador crea o reutiliza la sesión `laboratorio-cpu`, clona las revisiones
+El lanzador crea o reutiliza la sesión `laboratorio-cpu` en una VM CPU High-RAM
+(más núcleos y RAM; `--estandar` pide la de 2 vCPU), clona las revisiones
 de los tres motores y del script común que utiliza la laptop, aplica el parche
 de BitNet, descarga los modelos desde revisiones fijas y realiza las dos
 conversiones necesarias. Comprueba que los seis GGUF tengan el mismo SHA-256
@@ -22,8 +23,22 @@ necesario depende del hardware de Colab y puede exceder la duración de una VM.
 Cada minuto descarga un ZIP con los resultados parciales en
 `registros/colab/actual/ultimo.zip`. También los extrae a
 `registros/colab/actual/resultados/`. Al terminar descarga el respaldo final y
-libera la máquina. Mantén abierta la terminal para recibir los respaldos;
-interrumpir el cliente no garantiza que se detenga el trabajo remoto.
+libera la máquina.
+
+Cerrar la terminal, pulsar Ctrl+C o apagar la laptop no detiene la VM: sigue
+mientras el kernel ejecute código, hasta la duración máxima que imponga Colab
+(la FAQ habla en general de hasta 12 horas). Sin el lanzador conectado no se
+descargan respaldos y lo avanzado en ese lapso solo está en la VM. Al volver a
+ejecutar el mismo comando, el lanzador retoma: si la corrida sigue, descarga sus
+respaldos cada minuto; si ya terminó, la VM la esperaba hasta 12 horas con los
+resultados, y el lanzador los descarga y la libera; si la VM se perdió, crea otra
+y reanuda desde el último respaldo local. Para cerrar la terminal sin cortar las
+descargas, con la laptop encendida:
+
+```bash
+systemd-run --user --unit=laboratorio-colab --same-dir bash bin/experimentar_colab.sh
+journalctl --user -u laboratorio-colab -f
+```
 
 Si la máquina se pierde, vuelve a ejecutar el mismo comando: reutiliza el
 respaldo local para continuar. Si cambió el tipo de CPU, RAM o número de hilos,
@@ -154,6 +169,16 @@ sale idéntico byte a byte. Por esa copia temporal, el mínimo de disco libre
 sube a 50 GiB. También se comprobó que se pueden descargar sin credenciales el
 repositorio común en su commit fijado, los tres motores y el submódulo de
 BitNet, y que el parche aplica.
+
+El mismo día: la VM se pide High-RAM por defecto. Cada respaldo lleva un latido
+y el lanzador retoma una corrida que siguió sin la laptop, en lugar de quedar
+bloqueado por la sesión marcada como ocupada. Las respuestas y el hardware
+previos se restauran antes del primer respaldo: antes, el primer ZIP de una VM
+nueva (todavía sin respuestas) reemplazaba al local. La VM ya no se libera si
+falla la descarga final. Una VM que corra la carga anterior se rechaza, porque
+una ejecución nueva quedaría en cola detrás de ella. Una corrida lanzada a las
+23:26 en una VM estándar, con la carga anterior, siguió compilando después de
+interrumpir el lanzador.
 
 Fuentes oficiales:
 
