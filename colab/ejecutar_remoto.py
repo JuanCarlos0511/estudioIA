@@ -135,8 +135,9 @@ def restore(path, payload, hardware):
 
 def setup(payload):
     write_state("preparando", inicio=now(), fase="dependencias")
-    if shutil.disk_usage(ROOT).free < 40 * 2**30:
-        raise RuntimeError("Se requieren al menos 40 GiB libres para descargas y conversiones.")
+    # Pico estimado ~45 GB: descargas, motores y el F32 de Falcon más su copia temporal.
+    if shutil.disk_usage(ROOT).free < 50 * 2**30:
+        raise RuntimeError("Se requieren al menos 50 GiB libres para descargas y conversiones.")
     if os.geteuid() != 0:
         raise RuntimeError("Este instalador requiere el entorno administrado estándar de Colab (root).")
     run(["apt-get", "update", "-qq"])
@@ -211,8 +212,15 @@ def setup(payload):
                                "requests", "tqdm", "packaging"])
         run([python, "-m", "pip", "install", "-e", bitnet / "3rdparty" / "llama.cpp" / "gguf-py"])
         intermediate = falcon / "ggml-model-f32.gguf"
+        # Sin --use-temp-file el conversor retiene en RAM los ~13 GB del F32 hasta
+        # escribirlo; la VM CPU estándar tiene ~12.7 GB y el kernel lo mataría.
+        # El GGUF resultante es idéntico byte a byte. El temporal va al disco de la corrida.
+        scratch = ROOT / "tmp"
+        scratch.mkdir(exist_ok=True)
         run([python, "-u", bitnet / "utils" / "convert-hf-to-gguf-bitnet.py", falcon,
-             "--outtype", "f32", "--outfile", intermediate.with_suffix(".gguf.part")], cwd=bitnet)
+             "--outtype", "f32", "--use-temp-file",
+             "--outfile", intermediate.with_suffix(".gguf.part")],
+            cwd=bitnet, env={**os.environ, "TMPDIR": str(scratch)})
         intermediate.with_suffix(".gguf.part").replace(intermediate)
         run([bitnet / "build" / "bin" / "llama-quantize", intermediate,
              falcon_final.with_suffix(".gguf.part"), "I2_S", "1"])

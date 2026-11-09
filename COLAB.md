@@ -146,6 +146,15 @@ con repositorios Git reales comprueban la clonación desde cero, la reanudación
 de un repositorio vacío, la repetición y el rechazo de una revisión diferente.
 El lanzador liberó la VM tras el fallo. La corrida corregida necesita relanzarse.
 
+Revisión del 8 de noviembre de 2026, antes de relanzar: el conversor de BitNet
+retenía en RAM los ~13 GB del F32 de Falcon hasta escribirlo, más que los
+~12.7 GB de la VM CPU estándar. Ahora usa `--use-temp-file`, con el temporal
+en la carpeta de la corrida; con el mismo `gguf-py` se comprobó que el archivo
+sale idéntico byte a byte. Por esa copia temporal, el mínimo de disco libre
+sube a 50 GiB. También se comprobó que se pueden descargar sin credenciales el
+repositorio común en su commit fijado, los tres motores y el submódulo de
+BitNet, y que el parche aplica.
+
 Fuentes oficiales:
 
 - [CLI de Google Colab](https://github.com/googlecolab/google-colab-cli).
