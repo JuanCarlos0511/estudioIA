@@ -225,7 +225,8 @@ class LifecycleTests(unittest.TestCase):
                 cli.assert_not_called()
                 compile((Path(temp) / "ejecutar_remoto.py").read_text(), "carga", "exec")
 
-    def run_fake(self, remote_status, exec_return=0, known=None, states=None, extra_args=()):
+    def run_fake(self, remote_status, exec_return=0, known=None, states=None, extra_args=(),
+                 shape=None):
         """Simula el CLI; ``states`` son los estado.json que devuelve cada descarga."""
         fresh = datetime.datetime.now(datetime.timezone.utc).isoformat(timespec="seconds")
         states = list(states or [])
@@ -234,6 +235,8 @@ class LifecycleTests(unittest.TestCase):
             sessions = directory / "sesiones.json"
             if known:
                 sessions.write_text(json.dumps(known))
+            if shape:
+                (directory / "forma_vm.txt").write_text(shape)
             calls = []
             def fake_cli(*args, **kwargs):
                 calls.append(args)
@@ -282,6 +285,14 @@ class LifecycleTests(unittest.TestCase):
         self.assertIn(("new", "-s", "laboratorio-cpu", "--high-mem"), calls)
         _, calls = self.run_fake("completo", extra_args=["--estandar"])
         self.assertIn(("new", "-s", "laboratorio-cpu"), calls)
+
+    def test_resumed_run_keeps_its_vm_shape(self):
+        # La corrida empezó en estándar: una VM nueva para reanudar también lo es.
+        _, calls = self.run_fake("completo", shape="estandar")
+        self.assertIn(("new", "-s", "laboratorio-cpu"), calls)
+        result, calls = self.run_fake("completo", shape="high-ram", extra_args=["--estandar"])
+        self.assertEqual(result, "error")
+        self.assertEqual(calls, [])
 
     def test_reattaches_to_run_that_continued_without_laptop(self):
         # La terminal se cerró: la sesión quedó marcada como ocupada y la VM

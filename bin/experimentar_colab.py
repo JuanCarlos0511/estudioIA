@@ -150,6 +150,17 @@ def check_backup(path, payload):
             raise RuntimeError("El respaldo usa otro código o modelos. Usa --salida para otra corrida.")
 
 
+def vm_shape(args, output):
+    """Tipo de VM de la corrida: al reanudar se repite, para no mezclar hardware."""
+    saved = output / "forma_vm.txt"
+    if saved.exists():
+        shape = saved.read_text().strip()
+        if args.estandar and shape != "estandar":
+            raise RuntimeError(f"Esta corrida usa VMs {shape} ({saved}); usa --salida para otra corrida.")
+        return shape
+    return "estandar" if args.estandar else "high-ram"
+
+
 def alive(status):
     try:
         beat = datetime.datetime.fromisoformat(status["latido"])
@@ -196,7 +207,8 @@ def main():
     parser.add_argument("--salida", type=Path, default=ROOT / "registros" / "colab" / "actual")
     parser.add_argument("--preparar", action="store_true", help="Generar y validar la carga sin conectar ni crear una VM")
     parser.add_argument("--estandar", action="store_true",
-                        help="Crear la VM CPU estándar (2 vCPU) en lugar de la High-RAM")
+                        help="Crear la VM CPU estándar (2 vCPU) en lugar de la High-RAM; "
+                             "al reanudar se repite el tipo con que empezó la corrida")
     args = parser.parse_args()
     output = args.salida.resolve()
     output.mkdir(parents=True, exist_ok=True)
@@ -230,6 +242,7 @@ def execute(args, output):
         return 0
 
     check_backup(output / "ultimo.zip", payload)
+    shape = vm_shape(args, output)
 
     # Sin conexión se detiene aquí: no afirma que haya empezado una corrida.
     cli("sessions")
@@ -241,8 +254,9 @@ def execute(args, output):
     proc = None
     try:
         if args.sesion not in known:
-            cli("new", "-s", args.sesion, *([] if args.estandar else ["--high-mem"]))
+            cli("new", "-s", args.sesion, *([] if shape == "estandar" else ["--high-mem"]))
             created = True
+            (output / "forma_vm.txt").write_text(shape + "\n")
         cli("status", "-s", args.sesion)
         cli("usage")
         # Si se cerró la terminal o se apagó la laptop, la corrida pudo seguir
