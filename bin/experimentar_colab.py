@@ -19,6 +19,7 @@ import zipfile
 ROOT = Path(__file__).resolve().parents[1]
 CLI = ROOT / "bin" / "colab"
 SESSION_FILE = ROOT / "runtimes" / "colab-estado" / "sessions.json"
+REFERENCE = ROOT / "colab" / "referencia.json"
 FINAL_STATES = ("completo", "fallido")
 # La VM renueva el latido cada minuto; sin cambios en este lapso se da por detenida.
 LATIDO_MAXIMO = 5 * 60
@@ -36,17 +37,42 @@ def git(directory, *args):
     return subprocess.check_output(["git", "-C", str(directory), *args], text=True).strip()
 
 
+def pinned(cfg, reference):
+    """GGUF y commits que la VM debe reproducir byte a byte.
+
+    Con la instalación local se fijan sus GGUF y commits, para comparar con esa
+    laptop; lo que falte se toma de colab/referencia.json (laptop de referencia).
+    """
+    models = {}
+    for name, expected in reference["modelos"].items():
+        path = Path(cfg.get("modelos", {}).get(name, ""))
+        if path.is_file():
+            print(f"Verificando pesos locales: {name}", flush=True)
+            models[name] = {"archivo": path.name, "bytes": path.stat().st_size, "sha256": sha256(path)}
+        else:
+            print(f"Sin pesos locales de {name}: se usa la referencia.", flush=True)
+            models[name] = expected
+    engines = {}
+    for name, spec in reference["motores"].items():
+        local = ROOT / "runtimes" / name
+        commit = git(local, "rev-parse", "HEAD") if (local / ".git").exists() else spec["commit"]
+        engines[name] = {"url": spec["url"], "commit": commit}
+    return models, engines
+
+
 def make_payload():
     lab = ROOT / "pruebas"
+    if not (lab / ".git").exists():
+        raise RuntimeError("Falta pruebas/: clona ahí testing-modelos-terniarios (ver README.md).")
     if git(lab, "status", "--porcelain", "--untracked-files=no"):
         raise RuntimeError("El repositorio común tiene cambios locales; hay que conservar una revisión reproducible.")
+    if not (lab / "config.json").is_file():
+        raise RuntimeError("Falta pruebas/config.json: copia pruebas/config.ejemplo.json y pon tu apellido.")
     cfg = json.loads((lab / "config.json").read_text())
+    if cfg.get("apellido", "apellido") == "apellido":
+        raise RuntimeError("Pon tu apellido en pruebas/config.json; nombra la carpeta de entrega.")
     manifest = copy.deepcopy(json.loads((ROOT / "registros" / "descargas.json").read_text()))
-    models = {}
-    for name, value in cfg["modelos"].items():
-        path = Path(value)
-        print(f"Verificando pesos locales: {name}", flush=True)
-        models[name] = {"archivo": path.name, "bytes": path.stat().st_size, "sha256": sha256(path)}
+    models, engines = pinned(cfg, json.loads(REFERENCE.read_text()))
     for entry in manifest:
         if entry["name"] == "bonsai2-2b-ternario":
             model = models[entry["name"]]
@@ -56,18 +82,11 @@ def make_payload():
             }]
     common = ["laboratorio.py", "requirements.txt", "plantillas/bitnet-2b.jinja",
               "plantillas/bitacora.md", "parches/bitnet-llamacpp.patch"]
-    engines = {
-        "BitNet": "https://github.com/microsoft/BitNet.git",
-        "llama.cpp": "https://github.com/ggml-org/llama.cpp.git",
-        "llama.cpp-prism": "https://github.com/PrismML-Eng/llama.cpp.git",
-    }
     return {
         "laboratorio_url": git(lab, "remote", "get-url", "origin"),
         "laboratorio_commit": git(lab, "rev-parse", "HEAD"),
         "archivos_comunes": {name: sha256(lab / name) for name in common},
-        "apellido": cfg["apellido"], "modelos": models,
-        "motores": {name: {"url": url, "commit": git(ROOT / "runtimes" / name, "rev-parse", "HEAD")}
-                    for name, url in engines.items()},
+        "apellido": cfg["apellido"], "modelos": models, "motores": engines,
         "descargas": manifest,
         "descargador": (ROOT / "bin" / "descargar_modelos.py").read_text(),
     }

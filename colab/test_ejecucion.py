@@ -126,6 +126,40 @@ class CheckpointTests(unittest.TestCase):
         self.assertTrue(local.alive(state))
 
 
+class PinnedTests(unittest.TestCase):
+    def test_uses_reference_for_missing_local_files(self):
+        # Quien no instaló los modelos ni los motores reproduce la laptop de referencia.
+        with tempfile.TemporaryDirectory() as temp:
+            root = Path(temp)
+            model = root / "a.gguf"
+            model.write_bytes(b"pesos locales")
+            reference = {
+                "modelos": {"a": {"archivo": "a.gguf", "bytes": 1, "sha256": "ref-a"},
+                            "b": {"archivo": "b.gguf", "bytes": 2, "sha256": "ref-b"}},
+                "motores": {"motor": {"url": "https://example.invalid/motor.git", "commit": "abc"}},
+            }
+            cfg = {"modelos": {"a": str(model), "b": str(root / "falta.gguf")}}
+            with patch.object(local, "ROOT", root), contextlib.redirect_stdout(io.StringIO()):
+                models, engines = local.pinned(cfg, reference)
+        self.assertEqual(models["a"]["bytes"], len(b"pesos locales"))
+        self.assertNotEqual(models["a"]["sha256"], "ref-a")
+        self.assertEqual(models["b"], reference["modelos"]["b"])
+        self.assertEqual(engines, reference["motores"])
+
+    def test_reference_matches_local_installation(self):
+        # La referencia publicada debe coincidir con los GGUF de la laptop que la generó.
+        reference = json.loads((PROJECT / "colab" / "referencia.json").read_text())
+        config = PROJECT / "pruebas" / "config.json"
+        if not config.is_file():
+            self.skipTest("sin instalación local")
+        paths = json.loads(config.read_text())["modelos"]
+        for name, expected in reference["modelos"].items():
+            path = Path(paths[name])
+            if not path.is_file():
+                self.skipTest("sin instalación local")
+            self.assertEqual((path.name, path.stat().st_size), (expected["archivo"], expected["bytes"]))
+
+
 class CloneTests(unittest.TestCase):
     """Clonaciones reales desde un repositorio local, sin red ni una VM."""
 

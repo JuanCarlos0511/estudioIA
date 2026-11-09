@@ -1,0 +1,49 @@
+{
+  "descripcion": "GGUF y commits de la laptop de referencia. La VM debe reproducirlos byte a byte. Se usan cuando no hay instalación local; con ella, el lanzador usa la local.",
+  "modelos": {
+    "bitnet-2b": {
+      "archivo": "ggml-model-i2_s.gguf",
+      "bytes": 1187801280,
+      "sha256": "4221b252fdd5fd25e15847adfeb5ee88886506ba50b8a34548374492884c2162"
+    },
+    "falcon3-3b-ternario": {
+      "archivo": "ggml-model-i2_s.gguf",
+      "bytes": 2221465856,
+      "sha256": "9baf40c439d2b8f8f878ec9c18656c634379934609fb07126b726283af8a0196"
+    },
+    "bonsai2-2b-ternario": {
+      "archivo": "Ternary-Bonsai-2-2B-PQ2_0.gguf",
+      "bytes": 517312992,
+      "sha256": "d5f01a4ecaf49239653308ee732ad1a0c5f802c0ddb997549fc7b694c8b45928"
+    },
+    "falcon3-3b-q4": {
+      "archivo": "Falcon3-3B-Instruct-q4_k_m.gguf",
+      "bytes": 2005684448,
+      "sha256": "ac9bc2edb58a961f77db11ae89e7f23b610d8b15c2ef603d1e7cb390c50d1aad"
+    },
+    "qwen2.5-1.5b-q4": {
+      "archivo": "qwen2.5-1.5b-instruct-q4_k_m.gguf",
+      "bytes": 1117320736,
+      "sha256": "6a1a2eb6d15622bf3c96857206351ba97e1af16c30d7a74ee38970e434e9407e"
+    },
+    "qwen3.5-2b-q4": {
+      "archivo": "Qwen3.5-2B-Q4_K_M.gguf",
+      "bytes": 1312164448,
+      "sha256": "58567d4999c7afbc64557476e1b3ffca3f9d5c4963cd3d64e1910d36268a29fe"
+    }
+  },
+  "motores": {
+    "BitNet": {
+      "url": "https://github.com/microsoft/BitNet.git",
+      "commit": "0b341e582afbf9e1011f24744b554c96a3477eb5"
+    },
+    "llama.cpp": {
+      "url": "https://github.com/ggml-org/llama.cpp.git",
+      "commit": "63b4b303bd87456adc2f09d56c7e1f74e9e26673"
+    },
+    "llama.cpp-prism": {
+      "url": "https://github.com/PrismML-Eng/llama.cpp.git",
+      "commit": "c96baf4abe24d11a50f326e40b6223b687449d63"
+    }
+  }
+}

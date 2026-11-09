@@ -14,7 +14,8 @@ export UV_TOOL_DIR="$root/runtimes/colab-tools"
 export UV_TOOL_BIN_DIR="$root/runtimes/colab-bin"
 mkdir -p "$root/runtimes/colab-estado"
 if [[ ! -x "$UV_TOOL_BIN_DIR/colab" ]]; then
-    uv tool install google-colab-cli
+    # bin/colab_local.py usa detalles internos de esta versión.
+    uv tool install google-colab-cli==0.7.5
 fi
 echo 'Abre el enlace que mostrará Google e inicia sesión con tu cuenta AI Pro.'
 echo 'Pega el código de autorización en esta terminal.'
